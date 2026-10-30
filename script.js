@@ -2,6 +2,7 @@
   "use strict";
 
   const STORAGE_KEY = "todo-list:tasks";
+  const THEME_KEY = "todo-list:theme";
 
   // --- State ---
   let tasks = loadTasks();
@@ -15,6 +16,7 @@
   const itemsLeft = document.getElementById("items-left");
   const clearCompletedBtn = document.getElementById("clear-completed");
   const filterButtons = document.querySelectorAll(".filter");
+  const themeToggle = document.getElementById("theme-toggle");
 
   // --- Storage helpers ---
   function loadTasks() {
@@ -162,6 +164,28 @@
     render();
   }
 
+  function setTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch (e) {}
+    updateThemeToggle(theme);
+  }
+
+  function updateThemeToggle(theme) {
+    if (!themeToggle) return;
+    themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+    themeToggle.setAttribute(
+      "aria-label",
+      theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+    );
+  }
+
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute("data-theme") || "light";
+    setTheme(current === "dark" ? "light" : "dark");
+  }
+
   function setFilter(filter) {
     currentFilter = filter;
     filterButtons.forEach((btn) => {
@@ -201,6 +225,11 @@
 
   clearCompletedBtn.addEventListener("click", clearCompleted);
 
+  if (themeToggle) {
+    themeToggle.addEventListener("click", toggleTheme);
+  }
+
   // --- Init ---
+  updateThemeToggle(document.documentElement.getAttribute("data-theme") || "light");
   render();
 })();

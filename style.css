@@ -240,8 +240,67 @@ body {
   text-decoration: none;
 }
 
-/* Screen-reader only */
-.sr-only {
+/* Theme toggle */
+.header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  background: #f3f4f6;
+}
+
+/* Dark theme */
+html[data-theme="dark"] {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --danger: #f87171;
+  --border: #334155;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme="dark"] body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+html[data-theme="dark"] .theme-toggle:hover {
+  background: #334155;
+}
+
+html[data-theme="dark"] .filter:hover {
+  background: #334155;
+}
+
+html[data-theme="dark"] .task:hover {
+  background: #243044;
+}
+
+html[data-theme="dark"] .task__delete:hover {
+  background: #450a0a;
+  color: var(--danger);
   position: absolute;
   width: 1px;
   height: 1px;

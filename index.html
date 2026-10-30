@@ -5,12 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To-Do List</title>
   <link rel="stylesheet" href="style.css">
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("todo-list:theme");
+        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var theme = saved || (prefersDark ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <main class="app">
     <header class="app__header">
-      <h1>To-Do List</h1>
-      <p class="app__subtitle">A simple place to keep track of your tasks.</p>
+      <div class="header-row">
+        <div>
+          <h1>To-Do List</h1>
+          <p class="app__subtitle">A simple place to keep track of your tasks.</p>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙</button>
+      </div>
     </header>
 
     <form class="add-form" id="add-form" autocomplete="off">
